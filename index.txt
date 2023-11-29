@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Password Strength</title>
+  <style>
+  <!-- selected all before after and every element, then we set the sizing of the page to box-->
+    *::before, *::after, * {
+      box-sizing: border-box;
+    }
+  <!--selecting background color-->
+    body {
+      background-color: hsl(262,40%,73%);
+      color: hsl(240,99%,41%);
+      text-align: center;
+    }
+   <!--styling strength meter-->
+    .strength-meter {
+      position: relative;
+      height: 2rem;
+      width: 90%;
+      border: 3px solid hsl(262, 40%, 86%);
+      border-radius: 1rem;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .strength-meter::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      height: 100%;
+      width: calc(1% * var(--strength, 0));
+      background-color: hsl(240,99%,41%);
+      transition: width 200ms;
+    }
+   <!-- styling the input box-->
+    .password-input {
+      margin-top: 1rem;
+      width: 90%;
+      padding: .25rem .75rem;
+      background-color: hsl(240,99%,41%);
+      color: white;
+      border: 1px solid hsl(262,40%,73%);
+      outline: none;
+      text-align: center;
+      border-radius: .3rem;
+    }
+   <!-- since we are trying to style heavily we disabled the outline and have to create an outline ourselves so that you can tell when you are inside the input box-->
+    .password-input:focus {
+      border-color: hsl(262, 40%, 86%);
+    }
+   <!-- styling deduction scroll-->
+    .reasons > * {
+      margin-top: .5rem;
+      color: hsl(240, 99%, 41%);
+    }
+  </style>
+  <!-- calls upon javascript script-->
+  <script src="script.js" defer</script>
+</head>
+<body>
+
+  <h1>CheckMyPassword</h1> 
+ <!-- title(CheckMyPassword) for page got give the first header -->
+ <!-- we give everything we need to select inside javascript an id value -->
+  <div class="strength-meter" id="strength-meter"></div> <!-- this div is used for the progress bar-->
+  <input class="password-input" id="password-input" value="password" type="text" autofocus aria-laballedby="password"> <!-- used for the input, I have autofocus and screen reader functions-->
+  <div id="reasons" class="reasons"></div> <!-- creates the deductions-->
+</body>
+</html>

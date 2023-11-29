@@ -1,16 +1,17 @@
+//calls upon variables from index.txt file
+//sets our variables to their ID from index file
+const strengthMeter = document.getElementById('strength-meter') /*sets strength meter variable*/
+const passwordInput = document.getElementById('password-input') /*sets password-input variable*/
+const reasonsContainer = document.getElementById('reasons')/*sets reason variable*/
 
-const strengthMeter = document.getElementById('strength-meter')  
-const passwordInput = document.getElementById('password-input') 
-const reasonsContainer = document.getElementById('reasons') 
-
-
+//check for anytime there is an unput on page
 passwordInput.addEventListener('input', updateStrengthMeter)
 updateStrengthMeter()
 
-function updateStrengthMeter() { 
-  const weaknesses = calculatePasswordStrength(passwordInput.value) 
+function updateStrengthMeter() {  /* starts the function to calculate strength */
+  const weaknesses = calculatePasswordStrength(passwordInput.value)/* start weakness variable*/
 
-  let strength = 100 
+  let strength = 100 /* sets strength to 100 returns reasons from container */
   reasonsContainer.innerHTML = ''
   weaknesses.forEach(weakness => {
     if (weakness == null) return
@@ -22,6 +23,7 @@ function updateStrengthMeter() {
   strengthMeter.style.setProperty('--strength', strength)
 }
 
+// calculates password strength by checking weaknesses
 function calculatePasswordStrength(password) {
   const weaknesses = []
   weaknesses.push(lengthWeakness(password))
@@ -33,6 +35,8 @@ function calculatePasswordStrength(password) {
   return weaknesses
 }
 
+//weaknesses List
+//length
 function lengthWeakness(password) {
   const length = password.length
 
@@ -51,23 +55,31 @@ function lengthWeakness(password) {
   }
 }
 
+
+
+//lowercasing
+function lowercaseWeakness(password) {
+  return characterTypeWeakness(password, /[a-z]/g, 'lowercase characters') /* returns array of lowercase characters*/
+}
+
+//uppercasing
 function uppercaseWeakness(password) {
   return characterTypeWeakness(password, /[A-Z]/g, 'uppercase characters')
 
 }
 
-function lowercaseWeakness(password) {
-  return characterTypeWeakness(password, /[a-z]/g, 'lowercase characters')
-}
-
+//numbers
 function numberWeakness(password) {
   return characterTypeWeakness(password, /[0-9]/g, 'numbers')
 }
 
+//specials
 function specialCharactersWeakness(password) {
   return characterTypeWeakness(password, /[^0-9a-zA-Z\s]/g, 'special characters')
 }
 
+//helper function characterTypeWeakness
+//checks if for repeatcharacters and the use of all 4 types of inputs
 function characterTypeWeakness(password, regex, type) {
   const matches = password.match(regex) || []
 
@@ -86,6 +98,7 @@ function characterTypeWeakness(password, regex, type) {
   }
 }
 
+//checks for repeat characters
 function repeatCharactersWeakness(password) {
   const matches = password.match(/(.)\1/g) || []
   if (matches.length > 0) {
